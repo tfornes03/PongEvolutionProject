@@ -8,6 +8,7 @@ public class Ball3DMovement : MonoBehaviour
     private float currentSpeed;
     private Rigidbody rb;
     private Vector3 startPosition;
+    private Coroutine speedBoostCoroutine;
 
     void Start()
     {
@@ -40,5 +41,17 @@ public class Ball3DMovement : MonoBehaviour
         rb.velocity = Vector3.zero;
         enabled = false; // Disables this script
     }
+    public void ApplySpeedBoost(float amount, float duration)
+    {
+        if (speedBoostCoroutine != null) StopCoroutine(speedBoostCoroutine);
+        speedBoostCoroutine = StartCoroutine(SpeedBoost(amount, duration));
+    }
 
+    IEnumerator SpeedBoost(float amount, float duration)
+    {
+        float original = initialSpeed;
+        initialSpeed += amount;
+        yield return new WaitForSeconds(duration);
+        initialSpeed = original;
+    }
 }

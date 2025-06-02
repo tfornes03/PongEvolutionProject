@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
-    private int winScore = 3;
+    private int winScore = 15;
     private bool gameEnded = false;
 
     void Start()
@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
 
         scorePlayer1++;
         UpdateScoreUI();
+        ClearAllPowerUps();
+        FindObjectOfType<PowerUpSpawner>()?.RestartSpawning();
+
+
 
         if (scorePlayer1 >= winScore)
         {
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
 
         scorePlayer2++;
         UpdateScoreUI();
+        ClearAllPowerUps(); // <<< ADD THIS
 
         if (scorePlayer2 >= winScore)
         {
@@ -52,6 +57,7 @@ public class GameManager : MonoBehaviour
             ball.ResetBall(false); // To Player 1
         }
     }
+
 
     void UpdateScoreUI()
     {
@@ -65,4 +71,19 @@ public class GameManager : MonoBehaviour
         winText.text = message;
         winText.gameObject.SetActive(true);
     }
+
+    void ClearAllPowerUps()
+    {
+        GameObject[] powerUpsInScene = GameObject.FindGameObjectsWithTag("PowerUp");
+
+        foreach (GameObject powerUp in powerUpsInScene)
+        {
+            if (powerUp != null)
+            {
+                Destroy(powerUp);
+            }
+        }
+    }
+
+
 }
