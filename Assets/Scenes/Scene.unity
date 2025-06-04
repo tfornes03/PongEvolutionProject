@@ -2704,7 +2704,7 @@ MonoBehaviour:
   enableTracking: 0
   numberOfPlayers: 2
   numberOfBaseStations: 4
-  enableRotation: 1
+  enableRotation: 0
   enableYAxis: 0
   virtualWorldSpace: {x: 100, y: 1, z: 100}
   players:

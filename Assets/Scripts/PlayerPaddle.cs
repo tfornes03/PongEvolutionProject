@@ -20,7 +20,7 @@ public class PlayerPaddle : MonoBehaviour
     public void Shrink(float factor, float duration)
     {
         if (resizeCoroutine != null) StopCoroutine(resizeCoroutine);
-        resizeCoroutine = StartCoroutine(ChangeSize(originalScale * factor, duration));
+        resizeCoroutine = StartCoroutine(ChangeSize(originalScale / factor, duration));
     }
 
     IEnumerator ChangeSize(Vector3 newSize, float duration)
