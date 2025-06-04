@@ -698,8 +698,8 @@ MonoBehaviour:
   - {fileID: 6464376395281125604, guid: a76d5fb9cf903cd4180179c590245ce1, type: 3}
   - {fileID: 8361442977562999728, guid: ddc7a69b88adf914ab293093a24ad411, type: 3}
   spawnInterval: 3
-  spawnMin: {x: -20, y: 0, z: -10}
-  spawnMax: {x: 20, y: 0, z: 10}
+  spawnMin: {x: -50, y: 0, z: -30}
+  spawnMax: {x: 50, y: 0, z: 30}
 --- !u!4 &90888596
 Transform:
   m_ObjectHideFlags: 0
