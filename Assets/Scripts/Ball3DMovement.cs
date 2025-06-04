@@ -10,6 +10,8 @@ public class Ball3DMovement : MonoBehaviour
     private Vector3 startPosition;
     private Coroutine speedBoostCoroutine;
 
+    public GameObject lastPlayerBounced;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -53,5 +55,13 @@ public class Ball3DMovement : MonoBehaviour
         initialSpeed += amount;
         yield return new WaitForSeconds(duration);
         initialSpeed = original;
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            lastPlayerBounced = collision.gameObject;
+        }
     }
 }

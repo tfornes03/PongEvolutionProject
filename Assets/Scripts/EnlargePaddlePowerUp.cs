@@ -7,12 +7,12 @@ public class EnlargePaddlePowerUp : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Ball"))
         {
-            PlayerPaddle paddle = other.GetComponent<PlayerPaddle>();
-            if (paddle != null)
+            Ball3DMovement ball = other.GetComponent<Ball3DMovement>();
+            if (ball.lastPlayerBounced != null)
             {
-                paddle.Enlarge(factor, duration);
+                ball.lastPlayerBounced.GetComponent<PlayerPaddle>().Enlarge(factor, duration);
             }
             Destroy(gameObject);
         }

@@ -2,20 +2,17 @@ using UnityEngine;
 
 public class ShrinkOpponentPaddlePowerUp : MonoBehaviour
 {
-    public GameObject player1;
-    public GameObject player2;
-    public float shrinkFactor = 0.5f;
+    public float factor = 1.5f;
     public float duration = 5f;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Ball"))
         {
-            GameObject opponent = (other.gameObject == player1) ? player2 : player1;
-            PlayerPaddle paddle = opponent.GetComponent<PlayerPaddle>();
-            if (paddle != null)
+            Ball3DMovement ball = other.GetComponent<Ball3DMovement>();
+            if (ball.lastPlayerBounced != null)
             {
-                paddle.Shrink(shrinkFactor, duration);
+                ball.lastPlayerBounced.GetComponent<PlayerPaddle>().Shrink(factor, duration);
             }
             Destroy(gameObject);
         }
