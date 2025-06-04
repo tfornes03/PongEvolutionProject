@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // If using TextMeshPro
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI winText;
     public Ball3DMovement ball;
+    public GameObject resetButtonObject; // Assign this in Inspector
+    public TextMeshProUGUI restartText; // Assign in Inspector
+
 
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
@@ -16,6 +19,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         winText.gameObject.SetActive(false); // Hide win message at start
+        if (restartText != null)
+            restartText.gameObject.SetActive(false);
+
+        if (resetButtonObject != null)
+            resetButtonObject.SetActive(false); // Hide reset button initially
+
         UpdateScoreUI();
     }
 
@@ -27,8 +36,6 @@ public class GameManager : MonoBehaviour
         UpdateScoreUI();
         ClearAllPowerUps();
         FindObjectOfType<PowerUpSpawner>()?.RestartSpawning();
-
-
 
         if (scorePlayer1 >= winScore)
         {
@@ -46,7 +53,8 @@ public class GameManager : MonoBehaviour
 
         scorePlayer2++;
         UpdateScoreUI();
-        ClearAllPowerUps(); // <<< ADD THIS
+        ClearAllPowerUps();
+        FindObjectOfType<PowerUpSpawner>()?.RestartSpawning();
 
         if (scorePlayer2 >= winScore)
         {
@@ -57,7 +65,6 @@ public class GameManager : MonoBehaviour
             ball.ResetBall(false); // To Player 1
         }
     }
-
 
     void UpdateScoreUI()
     {
@@ -70,10 +77,47 @@ public class GameManager : MonoBehaviour
         ball.StopBall();
         winText.text = message;
         winText.gameObject.SetActive(true);
+        restartText.gameObject.SetActive(true); 
         ball.GetComponent<Ball3DMovement>().PlayGameOverMusic();
         FindObjectOfType<PowerUpSpawner>().StopSpawning();
 
+        if (resetButtonObject != null)
+            resetButtonObject.SetActive(true); // Show reset button
 
+        if (restartText != null)
+        restartText.gameObject.SetActive(true);
+    }
+
+    
+
+    public void RestartGame()
+    {
+        Debug.Log("RestartGame() called");
+
+        scorePlayer1 = 0;
+        scorePlayer2 = 0;
+        gameEnded = false;
+
+        winText.gameObject.SetActive(false);
+        UpdateScoreUI();
+        ClearAllPowerUps();
+        FindObjectOfType<PowerUpSpawner>()?.RestartSpawning();
+
+        if (resetButtonObject != null)
+        {
+            resetButtonObject.SetActive(false); // Hide reset button again
+
+            // Reset button's internal state
+            ResetButton resetScript = resetButtonObject.GetComponent<ResetButton>();
+            if (resetScript != null)
+                resetScript.ResetButtonState();
+        }
+
+        ball.enabled = true;
+        ball.ResetBall(Random.value > 0.5f); // Start in random direction
+
+        if (restartText != null)
+            restartText.gameObject.SetActive(false);
     }
 
     void ClearAllPowerUps()
@@ -88,6 +132,4 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-
 }

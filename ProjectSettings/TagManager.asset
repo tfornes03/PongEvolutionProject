@@ -9,6 +9,7 @@ TagManager:
   - Ball
   - PowerUp
   - Wall
+  - ResetButton
   layers:
   - Default
   - TransparentFX
