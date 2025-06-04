@@ -71,6 +71,8 @@ public class GameManager : MonoBehaviour
         winText.text = message;
         winText.gameObject.SetActive(true);
         ball.GetComponent<Ball3DMovement>().PlayGameOverMusic();
+        FindObjectOfType<PowerUpSpawner>().StopSpawning();
+
 
     }
 

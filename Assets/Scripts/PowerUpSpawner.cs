@@ -8,30 +8,31 @@ public class PowerUpSpawner : MonoBehaviour
     public Vector3 spawnMin;
     public Vector3 spawnMax;
     private Coroutine spawnRoutine;
+    private bool gameOver = false;
 
     void Start()
     {
-       spawnRoutine = StartCoroutine(SpawnRoutine());
+        spawnRoutine = StartCoroutine(SpawnRoutine());
     }
 
     IEnumerator SpawnRoutine()
     {
-        while (true)
+        while (!gameOver)
         {
             yield return new WaitForSeconds(spawnInterval);
 
             if (powerUps.Length == 0) continue;
 
-            // Loop safety: skip if prefab is null or destroyed
             GameObject prefab = null;
-            int safety = 10; // Try up to 10 times to get a valid prefab
+            int safety = 10;
+
             while (prefab == null && safety-- > 0)
             {
                 int index = Random.Range(0, powerUps.Length);
                 prefab = powerUps[index];
             }
 
-            if (prefab == null) continue; // No valid prefab found
+            if (prefab == null) continue;
 
             Vector3 spawnPos = new Vector3(
                 Random.Range(spawnMin.x, spawnMax.x),
@@ -48,7 +49,18 @@ public class PowerUpSpawner : MonoBehaviour
         if (spawnRoutine != null)
             StopCoroutine(spawnRoutine);
 
+        gameOver = false;
         spawnRoutine = StartCoroutine(SpawnRoutine());
     }
 
+    public void StopSpawning()
+    {
+        gameOver = true;
+
+        if (spawnRoutine != null)
+        {
+            StopCoroutine(spawnRoutine);
+            spawnRoutine = null;
+        }
+    }
 }
