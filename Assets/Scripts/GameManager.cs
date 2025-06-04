@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private int scorePlayer1 = 0;
     private int scorePlayer2 = 0;
-    private int winScore = 15;
+    private int winScore = 3;
     private bool gameEnded = false;
 
     void Start()
@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
         ball.StopBall();
         winText.text = message;
         winText.gameObject.SetActive(true);
+        ball.GetComponent<Ball3DMovement>().PlayGameOverMusic();
+
     }
 
     void ClearAllPowerUps()

@@ -8,6 +8,7 @@ TagManager:
   - BlendPlane1
   - Ball
   - PowerUp
+  - Wall
   layers:
   - Default
   - TransparentFX

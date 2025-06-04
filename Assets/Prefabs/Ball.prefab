@@ -125,4 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0294fd2538ece194ca5d58249daaee44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
+  initialSpeed: 25
+  speedIncreaseRate: 2
+  lastPlayerBounced: {fileID: 0}
+  paddleHitSound: {fileID: 8300000, guid: c20dd1c56f3358f47a8c157fe2a675a5, type: 3}
+  wallHitSound: {fileID: 8300000, guid: c20dd1c56f3358f47a8c157fe2a675a5, type: 3}
+  powerupHitSound: {fileID: 8300000, guid: ae3e139211917b44692084a9f31bd651, type: 3}
